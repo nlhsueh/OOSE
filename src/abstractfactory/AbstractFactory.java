@@ -42,16 +42,16 @@ abstract class AbstractProductB {
   public abstract void doit(int x); 
 }
 
-//系列1 的零件 B
+//系列一的零件 B
 class ProductA1 extends AbstractProductA {
   public abstract void doit(int x) {
-     ... // 系列1 的實踐的方法
+     ... // 系列一的實踐的方法
   }   
 }
-//系列2 的零件 B
+//系列二的零件 B
 class ProductA2 extends AbstractProductA {
   public abstract void doit(int x) {
-     ... // 系列2 的實踐的方法
+     ... // 系列二的實踐的方法
   }   
 }
 
