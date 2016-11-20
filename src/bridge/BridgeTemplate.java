@@ -5,7 +5,7 @@ interface Implementor {
 	public void m2();
 }
 
-class ConcreteImplementorA implements Implementor {
+class ConcreteImplA implements Implementor {
 	public void m1() {
 		// ...
 	}
@@ -15,7 +15,7 @@ class ConcreteImplementorA implements Implementor {
 	}
 }
 
-class ConcreteImplementorB implements Implementor {
+class ConcreteImplB implements Implementor {
 	public void m1() {
 		// ...
 	}
@@ -48,7 +48,7 @@ class RefinedAbstraction1 extends Abstraction {
 		super(imp);
 	}
 
-	// 每個 RefinedAbstraction 執行 operation 的方式可能不同。
+	// 每個 RefinedAbstraction 執行 operation 的方式可能不同。先 m1() 再 m2()
 	void operation() {
 		m1();
 		m2();
@@ -61,7 +61,7 @@ class RefinedAbstraction2 extends Abstraction {
 		super(imp);
 	}
 
-	// 每個 RefinedAbstraction 執行 operation 的方式可能不同。
+	// 每個 RefinedAbstraction 執行 operation 的方式可能不同。先 m2() 再 m1()
 	void operation() {
 		m2();
 		m1();
