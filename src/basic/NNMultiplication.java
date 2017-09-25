@@ -76,54 +76,6 @@ class NNString extends NNEntity {
 	}
 }
 
-class NNColor extends NNEntity {
-	private String color;
-
-	public NNColor(String color) {
-		this.color = color;
-	}
-
-	public NNColor(NNColor copy) {
-		this(copy.color);
-	}
-
-	// 顏色相混
-	public NNEntity multiply(NNEntity otherone) {
-		if (otherone == null) {
-			return null;
-		} else if (getClass() != otherone.getClass()) {
-			return null;
-		} else {
-			NNColor otherone2 = (NNColor) otherone;
-			if (this.color.equals("Red")) {
-				if (otherone2.toString().equals("Red")) {
-					return new NNColor("Red");
-				} else if (otherone2.toString().equals("Green")) {
-					return new NNColor("Yellow");
-				} else
-					return new NNColor("Purple");
-			} else if (this.color.equals("Green")) {
-				if (otherone2.toString().equals("Red")) {
-					return new NNColor("Yellow");
-				} else if (otherone2.toString().equals("Green")) {
-					return new NNColor("Green");
-				} else
-					return new NNColor("Cyan");
-			} else {
-				if (otherone2.toString().equals("Red")) {
-					return new NNColor("Purple");
-				} else if (otherone2.toString().equals("Green")) {
-					return new NNColor("Cyan");
-				} else
-					return new NNColor("Blue");
-			}
-		}
-	}
-	public String toString() {
-		return color;
-	}
-}
-
 class TableDisplayer {
 	public static void multiplyAndShow(NNEntity[] xList, NNEntity[] yList) {
 		/* Multiply */
