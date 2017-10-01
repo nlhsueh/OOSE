@@ -5,7 +5,6 @@ public class SuperStringTokenizer extends StringTokenizer {
 
 	public SuperStringTokenizer(String arg0) {
 		super(arg0);
-		// TODO Auto-generated constructor stub
 		
 //		StringTokenizer st = new StringTokenizer("this is a book");
 //		
@@ -33,7 +32,4 @@ public class SuperStringTokenizer extends StringTokenizer {
 		//return null;
 		
 	}
-	
-	
-
 }
