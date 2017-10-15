@@ -1,5 +1,7 @@
 package basic;
-
+/*
+ * This is an ERROR code, for students to fix
+ */
 public class NNMultiplication {
 	public static void main(String[] args) {
 		NNEntity[] xListA = { new NNInteger(2), new NNInteger(3), new NNInteger(5), new NNInteger(6), new NNInteger(10) };

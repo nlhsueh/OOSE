@@ -66,6 +66,10 @@ public class ComparableDemo {
 	}
 }
 
+//interface Comparable {
+//	int compareTo(Object obj);
+//}
+
 class GeneralizedSelectionSort {
 	/**
 	 * Precondition: numberUsed <= a.length; The first numberUsed indexed
