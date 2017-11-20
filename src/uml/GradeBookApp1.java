@@ -1,3 +1,14 @@
+/*
+Step 1: Basic object and Offer relationship
+* in a course grading system, please find out the Classes
+  and identify their attributes, operations
+* the main code is good way to find the possible classes
+  , attributes and operations.
+* in this step we only model the "offer" relationship,
+  which is a 1-* relatipship.
+* the 1-* is implemented by a simple array. I know it is
+  not good. Later version will be good.  
+*/
 
 public class GradeBookApp1 {
 	public static void main(String args[]) {
@@ -12,7 +23,6 @@ public class GradeBookApp1 {
 		Nick.offer(Java);
 		Nick.offer(Python);
 		Nick.showCourse();
-
 	}
 	
 }
