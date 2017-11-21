@@ -1,5 +1,5 @@
 /*
-Step 3: to implement the "score" relationship
+To implement the "score" relationship
 >This version is enhanced from version 2a
 
 * add Teacher.score(Course, Student, int)
@@ -10,6 +10,9 @@ To complete the operation, we also add the following small methods
 * Course.getIndex(Student), to get the index of a student in the course
 * boolean Course.takenBy(Student), to check if the course is taken by a student
 * Course.score(Student, int), to score the grade of the student
+
+In the Teacher.score(Course, Student, int), Teacher has a "use" relationship
+to Student, even that it does not have the reference to Student
 */
 
 public class GradeBookApp3 {

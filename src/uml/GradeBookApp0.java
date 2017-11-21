@@ -1,8 +1,11 @@
 /*
-A gradebook application
+A gradebook application, the basic classes are:
 * Students
 * Course
-* Teacher  
+* Teacher 
+
+* if we don't want other class to modify the email directly
+  we should set the email attribute to "private" 
 */
 
 public class GradeBookApp0 {

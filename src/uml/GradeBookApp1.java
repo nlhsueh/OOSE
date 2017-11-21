@@ -1,13 +1,12 @@
 /*
-Step 1: Basic object and Offer relationship
-* in a course grading system, please find out the Classes
-  and identify their attributes, operations
-* the main code is good way to find the possible classes
-  , attributes and operations.
+"Offer" relationship between Teacher and Course
 * in this step we only model the "offer" relationship,
   which is a 1-* relatipship.
 * the 1-* is implemented by a simple array. I know it is
-  not good. Later version will be good.  
+  not good. Later version will be better.  
+
+* Teacher can "navigate" the Course, but Course can't 
+  naviate the Teacher (one way navigation)  
 */
 
 public class GradeBookApp1 {
@@ -39,8 +38,8 @@ class Course {
 class Teacher {
 	String tName;
 	private String email;	
-	Course[] courses = new Course[10];
-	int couseCount = 0;
+	Course[] courses = new Course[10]; //++++++++++
+	int couseCount = 0; //++++++++++
 	public Teacher(String name) {
 		this.tName = name;
 	}

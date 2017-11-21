@@ -1,5 +1,7 @@
 /*
 FIX the bug in GradeBookApp2
+* In a double navigation, Teacher set reference to Course, 
+  and Course set reference to Teacher
 */
 
 public class GradeBookApp2a {
@@ -19,8 +21,7 @@ public class GradeBookApp2a {
 		Albert.takeCourse(Java);
 
 		Java.showCourseInfo();
-	}
-	
+	}	
 }
 
 class Course {

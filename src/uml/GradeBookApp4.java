@@ -1,8 +1,12 @@
 /*
-Step 4: to compute the average of a course
+* The generalization relationship between Member and (Teacher, Student)
+* To compute the average of a course
 >This version is enhanced from version 3
 
+* add class Member
+* modify Teacher and Student, move some attributes/method to Member
 * add Course.getAverage();
+
 * modify Course.showCourseInfo();
 */
 
@@ -13,6 +17,14 @@ public class GradeBookApp4 {
 		Student Alex = new Student ("Alex"); //++++++++++
 
 		Teacher Nick = new Teacher ("Nick");
+
+		Albert.setEmail("albert@gmail.com"); //++++++++++
+		Jie.setEmail("jie@gmail.com"); 
+		Nick.setEmail("nick@gmail.com"); 
+
+		Member[] members = {Albert, Jie, Nick}; //++++++++++
+		for (Member m: members) 
+			m.showInfo();
 
 		Course Java = new Course ("Java", 3);
 		Course Python = new Course ("Python", 3);
@@ -60,11 +72,11 @@ class Course {
 
 	public void showCourseInfo() { 
 		System.out.println("Course: "+ cName);
-		System.out.println("-- Teacher: " + teacher.tName);
+		System.out.println("-- Teacher: " + teacher.name); //*****
 		String s = "";
 		String g = "";
 		for (int i=0; i<studentCount ; i++) {
-			s += students[i].sName + ", ";
+			s += students[i].name + ", "; //*****
 			g += Integer.toString(grades[i]) + ", ";
 		}
 		System.out.println("-- Students: " + s);
@@ -88,7 +100,7 @@ class Course {
 	public void score(Student s, int g) { 
 		int idx = getIndex(s);
 		if (idx == -1)
-			System.out.println(s.sName + " is not in " + cName);
+			System.out.println(s.name + " is not in " + cName);
 		else {
 			grades[idx] = g;
 			scoreCount++; 	//++++++++++
@@ -115,17 +127,18 @@ class Course {
 	}
 }
 
-class Teacher {
-	String tName;
-	private String email;	
+class Teacher extends Member { //*****
+	// String tName; //----------
+	// private String email;	
 	Course[] courses = new Course[10];
 	int courseCount = 0;
-	public Teacher(String name) {
-		this.tName = name;
+
+	public Teacher(String name) { 
+		super(name); //*****
 	}
-	public void setEmail(String e) {
-		this.email = e;
-	}	
+	// public void setEmail(String e) {
+	// 	this.email = e;
+	// }	
 	public void offer(Course c) {
 		if (courseCount <= 9) {
 			courses[courseCount++] = c;	
@@ -160,17 +173,13 @@ class Teacher {
 	}
 }
 
-class Student {
-	String sName;
-	private String email;
+class Student extends Member { //*****
 	Course[] courses = new Course[10];
-
+	// String sName; //----------
+	// private String email;
 	int courseCount = 0;
-	public Student (String name){
-		this.sName = name;
-	}
-	public void setEmail(String e) {
-		this.email = e;
+	public Student (String name){ 
+		super(name); //*****
 	}
 	public void takeCourse(Course c) {
 		if (courseCount <=9) {
@@ -181,7 +190,7 @@ class Student {
 			System.out.println("Hei, you take too many courses");
 	}
 	public void showGrade() { 
-		System.out.println("The grades of student " + sName);
+		System.out.println("The grades of student " + name); //*****
 		for (int i=0; i<courseCount; i++) {
 			Course c = courses[i];
 			String gString = "no grade";
@@ -190,4 +199,18 @@ class Student {
 			System.out.println("-- " + c.cName + ": " + gString);
 		}
 	}
+}
+
+class Member { //++++++++++
+	String name;
+	private String email;
+	public Member(String name) {
+		this.name = name;
+	}
+	public void setEmail(String e) {
+		this.email = e;
+	}
+	public void showInfo() { //++++++++++
+		System.out.println(name + ", email: " + email);
+	}	
 }

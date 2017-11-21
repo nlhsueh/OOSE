@@ -1,8 +1,12 @@
 /*
-Step 2: to implement "take_course" relationship
+"take_course" relationship between Student and Course
 * add Student.takeCourse(Course) to take course
 * add a Course.showCourseInfo() to show course information
 * Check overflow of the array in all classes
+
+* Student*---take_course---*Course, is a double navigation
+* We also add a referece from Course to Teacher, so the "offer"
+  is now a double navigation
 
 !! This code has bug, please FIX it.
 */
@@ -20,8 +24,8 @@ public class GradeBookApp2 {
 		Nick.offer(Java);
 		Nick.offer(Python);
 
-		Jie.takeCourse(Java);
-		Albert.takeCourse(Java);
+		Jie.takeCourse(Java); //++++++++++
+		Albert.takeCourse(Java); //++++++++++
 
 		Java.showCourseInfo();
 	}
@@ -31,22 +35,22 @@ public class GradeBookApp2 {
 class Course {
 	String cName;
 	private int degree;
-	Student[] students = new Student[10];
-	int studentCount = 0;
-	String teacher = "None";
+	Student[] students = new Student[10]; //++++++++++
+	int studentCount = 0; //++++++++++
+	String teacher = "None"; //++++++++++
 	public Course (String name, int degree) {
 		this.cName = name;
 		this.degree = degree;
 	}
 
-	public void registeredBy(Student s) {
+	public void registeredBy(Student s) { //++++++++++
 		if (studentCount <= 9)
 			students[studentCount++] = s;
 		else
 			System.out.println("Students overflow in a class");
 	}
 
-	public void showCourseInfo() {
+	public void showCourseInfo() { //++++++++++
 		System.out.println("Course: "+ cName);
 		System.out.println("-- Teacher: " + teacher);
 		String s = "";
@@ -76,7 +80,7 @@ class Teacher {
 			System.out.println("Offer too many courses");
 	}
 	
-	public void showCourse() {
+	public void showCourse() { 
 		for (Course c: courses) {
 			if (c != null)
 				System.out.println(c.cName);
@@ -97,7 +101,7 @@ class Student {
 	public void setEmail(String e) {
 		this.email = e;
 	}
-	public void takeCourse(Course c) {
+	public void takeCourse(Course c) { //++++++++++
 		if (courseCount <=9)
 			courses[courseCount++] = c;
 		else 
