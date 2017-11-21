@@ -14,8 +14,8 @@ public class GradeBookApp4 {
 
 		Teacher Nick = new Teacher ("Nick");
 
-		Course Java = new Course ("Java");
-		Course Python = new Course ("Python");
+		Course Java = new Course ("Java", 3);
+		Course Python = new Course ("Python", 3);
 
 		Nick.offer(Java);
 		Nick.offer(Python);
@@ -37,6 +37,7 @@ public class GradeBookApp4 {
 
 class Course {
 	String cName;
+	private int degree;
 	Student[] students = new Student[10];
 	int studentCount = 0;
 	Teacher teacher = new Teacher("None");
@@ -45,8 +46,9 @@ class Course {
 	double sum=0; //++++++++++
 	double average=0; //++++++++++
 
-	public Course (String name) {
+	public Course (String name, int degree) {
 		this.cName = name;
+		this.degree = degree;
 	}
 
 	public void registeredBy(Student s) {
@@ -115,11 +117,15 @@ class Course {
 
 class Teacher {
 	String tName;
+	private String email;	
 	Course[] courses = new Course[10];
 	int courseCount = 0;
 	public Teacher(String name) {
 		this.tName = name;
 	}
+	public void setEmail(String e) {
+		this.email = e;
+	}	
 	public void offer(Course c) {
 		if (courseCount <= 9) {
 			courses[courseCount++] = c;	
@@ -156,13 +162,16 @@ class Teacher {
 
 class Student {
 	String sName;
+	private String email;
 	Course[] courses = new Course[10];
 
 	int courseCount = 0;
 	public Student (String name){
 		this.sName = name;
 	}
-
+	public void setEmail(String e) {
+		this.email = e;
+	}
 	public void takeCourse(Course c) {
 		if (courseCount <=9) {
 			courses[courseCount++] = c;

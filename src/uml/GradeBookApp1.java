@@ -17,35 +17,41 @@ public class GradeBookApp1 {
 
 		Teacher Nick = new Teacher ("Nick");
 
-		Course Java = new Course ("Java");
-		Course Python = new Course ("Python");
+		Course Java = new Course ("Java", 3);
+		Course Python = new Course ("Python", 3);
 
-		Nick.offer(Java);
-		Nick.offer(Python);
-		Nick.showCourse();
+		Nick.offer(Java); //++++++++++
+		Nick.offer(Python); //++++++++++
+		Nick.showCourse(); //++++++++++
 	}
 	
 }
 
 class Course {
 	String cName;
-	public Course (String name) {
+	private int degree;
+	public Course (String name, int degree) {
 		this.cName = name;
+		this.degree = degree;
 	}
 }
 
 class Teacher {
 	String tName;
+	private String email;	
 	Course[] courses = new Course[10];
 	int couseCount = 0;
 	public Teacher(String name) {
 		this.tName = name;
 	}
-	public void offer(Course c) {
+	public void setEmail(String e) {
+		this.email = e;
+	}	
+	public void offer(Course c) { //++++++++++
 		courses[couseCount++] = c;
 	}
 	
-	public void showCourse() {
+	public void showCourse() { //++++++++++
 		for (Course c: courses) {
 			if (c != null)
 				System.out.println(c.cName);
@@ -57,7 +63,11 @@ class Teacher {
 
 class Student {
 	String sName;
+	private String email;
 	public Student (String name){
 		this.sName = name;
 	}
+	public void setEmail(String e) {
+		this.email = e;
+	}	
 }
