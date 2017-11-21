@@ -55,7 +55,7 @@ class University {
 	}
 
 	public void setScore(Course c, Student s, int g) {
-		gbook.put(new Pair(c, s), g);
+		gbook.put(new Pair<Course, Student>(c, s), g);
 	}
 
 	public void showNoPass() {
@@ -131,7 +131,6 @@ class Member {
 
 class Teacher extends Member {
 	ArrayList<Course> courses = new ArrayList<Course>();
-	Map<Pair<Course, Student>, Integer> gbook = new HashMap<Pair<Course, Student>, Integer>();
 
 	public Teacher(String n) {
 		super(n);
@@ -159,6 +158,7 @@ class Teacher extends Member {
 class Course {
 	String name;
 	Teacher t;
+	ArrayList<Student> students = new ArrayList<Student>();
 
 	public Course(String c) {
 		name = c;
@@ -180,6 +180,10 @@ class Course {
 
 	public String toString() {
 		return name;
+	}
+
+	public void addStudent(Student s) {
+		students.add(s);
 	}
 
 }
@@ -204,7 +208,7 @@ class Pair<Course, Student> {
 	public boolean equals(Object otherPair) {
 		if (!(otherPair instanceof Pair))
 			return false;
-		Pair p = (Pair) otherPair;
+		Pair<Course, Student> p = (Pair<Course, Student>)otherPair;
 		return this.c.equals(p.c) && this.s.equals(p.s);
 	}
 }
@@ -215,14 +219,12 @@ class Student extends Member {
 		super(n);
 	}
 
-	public void takeCourse(Course java) {
-		// TODO Auto-generated method stub
-
+	public void takeCourse(Course c) {
+		c.addStudent(this);
 	}
 
 	public void enter(University fcu) {
 		fcu.registered(this);
 
 	}
-
 }
