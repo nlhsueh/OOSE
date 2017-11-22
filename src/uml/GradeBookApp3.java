@@ -1,4 +1,5 @@
 /*
+USE relationship
 To implement the "score" relationship
 >This version is enhanced from version 2a
 
@@ -12,7 +13,7 @@ To complete the operation, we also add the following small methods
 * Course.score(Student, int), to score the grade of the student
 
 In the Teacher.score(Course, Student, int), Teacher has a "use" relationship
-to Student, even that it does not have the reference to Student
+to Student, since it does not have the reference to Student
 */
 
 public class GradeBookApp3 {

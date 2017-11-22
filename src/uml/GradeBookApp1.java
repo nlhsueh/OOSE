@@ -1,9 +1,8 @@
 /*
+many-to-one ASSOCIATION
 "Offer" relationship between Teacher and Course
-* in this step we only model the "offer" relationship,
-  which is a 1-* relatipship.
 * the 1-* is implemented by a simple array. I know it is
-  not good. Later version will be better.  
+  not a good way. Later version will be better.  
 
 * Teacher can "navigate" the Course, but Course can't 
   naviate the Teacher (one way navigation)  

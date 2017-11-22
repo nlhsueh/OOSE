@@ -1,4 +1,5 @@
 /*
+many-to-many NAVIGATION relationship
 "take_course" relationship between Student and Course
 * add Student.takeCourse(Course) to take course
 * add a Course.showCourseInfo() to show course information

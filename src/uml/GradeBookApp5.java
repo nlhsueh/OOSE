@@ -1,30 +1,38 @@
 /*
-* GENERALIZATION
-* The generalization relationship between Member and (Teacher, Student)
-* To compute the average of a course
+INTERFACE and its implementation
+* a Instructor interface define the "teach" behavior
+* Teacher or IndustryExpert may server as an instructor
+* all instructors are required to set their Qualification
 
-* add class Member
-* modify Teacher and Student, move some attributes/method to Member
-* add Course.getAverage();
-
-* modify Course.showCourseInfo();
+* add an interface Instructor, methods: setQualification(Qualification)
+	and showQualification()
+* add a new class IndustryExpert, to implement the Instructor
+* modify Teacher to implement the Instructor
+* add a Qualification subclass Certification, which requires the 
+	year getting the cerification.
+* add a static method to show all instructors
 */
 
-public class GradeBookApp4 {
+public class GradeBookApp5 {
 	public static void main(String args[]) {
 		Student Jie = new Student ("Jie");
 		Student Albert = new Student ("Albert");
-		Student Alex = new Student ("Alex"); //++++++++++
+		Student Alex = new Student ("Alex"); 
 
 		Teacher Nick = new Teacher ("Nick");
+		
+		IndustryExpert Peter = new IndustryExpert("Peter"); //++++++++++
+		Nick.setQualification(new Qualification("IECS Ph.D")); //++++++++++
+		Peter.setQualification(new Certification(2000, "Cisco")); //++++++++++
+		Instructor tutors[] = {(Instructor)Nick, (Instructor)Peter}; //++++++++++
+		showQualify(tutors); //++++++++++
 
-		Albert.setEmail("albert@gmail.com"); //++++++++++
+		Albert.setEmail("albert@gmail.com"); 
 		Jie.setEmail("jie@gmail.com"); 
 		Nick.setEmail("nick@gmail.com"); 
 
-		Member[] members = {Albert, Jie, Nick}; //++++++++++
-		for (Member m: members) 
-			m.showInfo();
+		Member[] members = {Albert, Jie, Nick}; 
+		showMembers(members); //*****
 
 		Course Java = new Course ("Java", 3);
 		Course Python = new Course ("Python", 3);
@@ -34,17 +42,34 @@ public class GradeBookApp4 {
 
 		Jie.takeCourse(Java);
 		Albert.takeCourse(Java);
-		Alex.takeCourse(Java); //++++++++++
+		Alex.takeCourse(Java); 
 
 		Nick.score(Java, Jie, 100); 
 		Nick.score(Java, Albert, 98); 
-		Nick.score(Java, Alex, 20); //++++++++++
+		Nick.score(Java, Alex, 20); 
 		
-		// Jie.showGrade(); 
-		// Albert.showGrade(); 
-		// Alex.showGrade(); //++++++++++
-		Java.showCourseInfo(); 
+		Course[] courses = {Java, Python};
+		showCourses(courses);
 	}	
+
+	public static void showQualify(Instructor[] t) { //++++++++++
+		System.out.println("\n=== INSTRUCTORS QUALIFICATION ===");
+		for (Instructor i: t)
+			i.showQualification();
+	}
+
+	public static void showMembers(Member[] members) { //++++++++++
+		System.out.println("\n=== MEMBERS ===");		
+		for (Member m: members) 
+			m.showInfo();
+	}
+
+	public static void showCourses(Course[] courses) { //++++++++++
+		System.out.println("\n=== COURSES ===");		
+		for (Course c: courses) 
+			c.showCourseInfo();
+	}
+
 }
 
 class Course {
@@ -54,9 +79,9 @@ class Course {
 	int studentCount = 0;
 	Teacher teacher = new Teacher("None");
 	int [] grades = new int[10];
-	int scoreCount = 0; //++++++++++
-	double sum=0; //++++++++++
-	double average=0; //++++++++++
+	int scoreCount = 0; 
+	double sum=0; 
+	double average=0; 
 
 	public Course (String name, int degree) {
 		this.cName = name;
@@ -72,16 +97,16 @@ class Course {
 
 	public void showCourseInfo() { 
 		System.out.println("Course: "+ cName);
-		System.out.println("-- Teacher: " + teacher.name); //*****
+		System.out.println("-- Teacher: " + teacher.name); 
 		String s = "";
 		String g = "";
 		for (int i=0; i<studentCount ; i++) {
-			s += students[i].name + ", "; //*****
+			s += students[i].name + ", "; 
 			g += Integer.toString(grades[i]) + ", ";
 		}
 		System.out.println("-- Students: " + s);
 		System.out.println("-- Grades: " + g);
-		System.out.println("-- Average: "+ average); //++++++++++
+		System.out.println("-- Average: "+ average); 
 	}
 
 	public void setTeacher(Teacher t) {
@@ -103,7 +128,7 @@ class Course {
 			System.out.println(s.name + " is not in " + cName);
 		else {
 			grades[idx] = g;
-			scoreCount++; 	//++++++++++
+			scoreCount++; 	
 			sum += g;
 			average = sum/scoreCount;
 		}
@@ -127,18 +152,15 @@ class Course {
 	}
 }
 
-class Teacher extends Member { //*****
-	// String tName; //----------
-	// private String email;	
+class Teacher extends Member implements Instructor {  //*****	
 	Course[] courses = new Course[10];
 	int courseCount = 0;
+	Qualification qualification; //++++++++++
 
 	public Teacher(String name) { 
-		super(name); //*****
+		super(name); 
 	}
-	// public void setEmail(String e) {
-	// 	this.email = e;
-	// }	
+
 	public void offer(Course c) {
 		if (courseCount <= 9) {
 			courses[courseCount++] = c;	
@@ -171,12 +193,19 @@ class Teacher extends Member { //*****
 		}
 		return false;
 	}
+
+	public void setQualification(Qualification q) { //++++++++++
+		this.qualification = q;
+	}
+
+	public void showQualification() { //++++++++++
+		System.out.println(name + " is a teacher because " + qualification);
+	}
 }
 
-class Student extends Member { //*****
+class Student extends Member {
 	Course[] courses = new Course[10];
-	// String sName; //----------
-	// private String email;
+
 	int courseCount = 0;
 	public Student (String name){ 
 		super(name); //*****
@@ -190,7 +219,7 @@ class Student extends Member { //*****
 			System.out.println("Hei, you take too many courses");
 	}
 	public void showGrade() { 
-		System.out.println("The grades of student " + name); //*****
+		System.out.println("The grades of student " + name); 
 		for (int i=0; i<courseCount; i++) {
 			Course c = courses[i];
 			String gString = "no grade";
@@ -201,7 +230,7 @@ class Student extends Member { //*****
 	}
 }
 
-abstract class Member { //++++++++++
+abstract class Member { 
 	String name;
 	private String email;
 	public Member(String name) {
@@ -210,7 +239,42 @@ abstract class Member { //++++++++++
 	public void setEmail(String e) {
 		this.email = e;
 	}
-	public void showInfo() { //++++++++++
+	public void showInfo() { 
 		System.out.println(name + ", email: " + email);
 	}	
+}
+
+interface Instructor { //++++++++++
+	public void setQualification(Qualification q);
+	public void showQualification();
+}
+
+class Qualification { //++++++++++
+	String description;
+	public Qualification(String desc) {
+		this.description = desc;
+	}
+	public String toString() {
+		return description;
+	}
+}
+
+class Certification extends Qualification { //++++++++++
+	public Certification(int year, String desc) {
+		super(desc + " " + Integer.toString(year));
+	}
+}
+
+class IndustryExpert implements Instructor { //++++++++++
+	Qualification q;
+	String name;
+	public IndustryExpert(String name) {
+		this.name = name;
+	}
+	public void setQualification(Qualification q) {
+		this.q = q;
+	}
+	public void showQualification() {
+		System.out.println(name + " is qualified to be an instructor because " + q);
+	}
 }

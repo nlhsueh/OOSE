@@ -1,4 +1,5 @@
 /*
+CLASSES and attributes, operations
 A gradebook application, the basic classes are:
 * Students
 * Course
