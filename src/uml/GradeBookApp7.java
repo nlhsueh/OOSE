@@ -2,7 +2,10 @@
 Strategy design pattern
 * Use strategy design pattern to sort the grade in Course
 	* we can apply different sorting strategy in the future
+	* in this case, we implement selection sort
 */
+
+import java.util.Arrays;	
 
 public class GradeBookApp7 { 
 	private Student Jie, Albert, Alex; 
@@ -23,9 +26,9 @@ public class GradeBookApp7 {
 
 	private void init() { 
 		// create students
+		Alex = new Student ("Alex"); 
 		Jie = new Student ("Jie");
 		Albert = new Student ("Albert");
-		Alex = new Student ("Alex"); 
 
 		// create teachers
 		Nick = new Teacher ("Nick");
@@ -54,15 +57,17 @@ public class GradeBookApp7 {
 		Nick.offer(Java);
 		Nick.offer(Python);
 
+		Alex.takeCourse(Java); 
 		Jie.takeCourse(Java);
 		Albert.takeCourse(Java);
-		Alex.takeCourse(Java); 
 	}
 
 	private void score() { 
+		Nick.score(Java, Alex, 70); 
 		Nick.score(Java, Jie, 100); 
 		Nick.score(Java, Albert, 98); 
-		Nick.score(Java, Alex, 20); 		
+
+		Java.setSorter(new SelectionSorter()); //++++++++++
 		Java.showSortedGrades(); //++++++++++
 	}
 
@@ -79,9 +84,10 @@ public class GradeBookApp7 {
 	}
 }
 
-interface Config { //++++++++++
+interface Config { 
 	public static int MAX_STUDENT = 10; // max student number in a school
-	public static int MAX_COURSE = 10; //max course number in a school
+	public static int MAX_COURSE = 10; // max course number in a school
+	public static int NOT_SCORE = -1; // not a legal grade //++++++++
 }
 
 class Course {
@@ -94,11 +100,14 @@ class Course {
 	int scoreCount = 0; 
 	double sum=0; 
 	double average=0; 
-	SortStrategy sorter;
+	SortStrategy sorter; //++++++++++
 
 	public Course (String name, int degree) {
 		this.cName = name;
 		this.degree = degree;
+
+		for (int i=0; i< Config.MAX_STUDENT; i++)
+			grades[i]=Config.NOT_SCORE;
 	}
 
 	public void registeredBy(Student s) {
@@ -169,13 +178,20 @@ class Course {
 	}
 
 	public void showSortedGrades() { //++++++++++
-		sorter.sort(grades);
-		// int i=0;
-		// while (s[i] <> null) {
-		// 	System.out.println(i);
-		// 	i++;
-		// }
-		// System.out.println(s);
+		int size = 0;
+		for (int i=0; i<grades.length; i++) {
+			if (grades[i] == Config.NOT_SCORE) {
+				size = i;
+				break;
+			}
+		}
+		int[] g = new int[size];
+		for (int i=0; i< size; i++) {
+			g[i] = grades[i];
+		}
+
+		g = sorter.sort(g);
+		System.out.println("The sorted grades are " + Arrays.toString(g));
 	}
 }
 
@@ -185,8 +201,15 @@ interface SortStrategy { //++++++++++
 
 class SelectionSorter implements SortStrategy { //++++++++++
 	public int[] sort(int [] s) {
-		System.out.println(s);
 		int [] s2 = s.clone();
+		for (int i=1; i<=s2.length-1; i++)
+			for (int j=0; j<s2.length-i; j++) {
+				if (s2[j] < s2[j+1]) {
+					int temp = s2[j];
+					s2[j] = s2[j+1];
+					s2[j+1] = temp;
+				}	
+			}
 		return s2;
 	}
 }
@@ -250,7 +273,7 @@ class Student extends Member {
 		super(name); 
 	}
 	public void takeCourse(Course c) {
-		if (courseCount <=9) {
+		if (courseCount <= Config.MAX_COURSE-1 ) { //*****
 			courses[courseCount++] = c;
 			c.registeredBy(this);
 		}	
@@ -263,7 +286,7 @@ class Student extends Member {
 			Course c = courses[i];
 			String gString = "no grade";
 			int g = c.getGrade(this);
-			if (g != -1) gString = Integer.toString(g);
+			if (g != Config.NOT_SCORE) gString = Integer.toString(g); //*****
 			System.out.println("-- " + c.cName + ": " + gString);
 		}
 	}
