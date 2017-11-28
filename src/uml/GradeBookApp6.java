@@ -1,6 +1,11 @@
 /*
-Too long method & Magic number
-
+Refactoring
+* Refactoring the code to avoid "too long method"
+	* main() is too long, split to init(), takeCourse(), show() methods
+	* the variables are moved from method to instance variable,
+	  shared by all methods
+* Refactoring to code to void "magic number"
+	* add an interface to store the MAX_COURSE and MAX_STUDENT
 */
 
 public class GradeBookApp6 { //**********
@@ -77,13 +82,18 @@ public class GradeBookApp6 { //**********
 	}
 }
 
+interface Config { //++++++++++
+	public static int MAX_STUDENT = 10; // max student number in a school
+	public static int MAX_COURSE = 10; //max course number in a school
+}
+
 class Course {
 	String cName;
 	private int degree;
-	Student[] students = new Student[10];
+	Student[] students = new Student[Config.MAX_STUDENT]; //**********
 	int studentCount = 0;
 	Teacher teacher = new Teacher("None");
-	int [] grades = new int[10];
+	int [] grades = new int[Config.MAX_STUDENT]; //**********
 	int scoreCount = 0; 
 	double sum=0; 
 	double average=0; 
@@ -157,10 +167,10 @@ class Course {
 	}
 }
 
-class Teacher extends Member implements Instructor {  //*****	
-	Course[] courses = new Course[10];
+class Teacher extends Member implements Instructor {  	
+	Course[] courses = new Course[Config.MAX_COURSE]; //**********
 	int courseCount = 0;
-	Qualification qualification; //++++++++++
+	Qualification qualification; 
 
 	public Teacher(String name) { 
 		super(name); 
@@ -199,21 +209,21 @@ class Teacher extends Member implements Instructor {  //*****
 		return false;
 	}
 
-	public void setQualification(Qualification q) { //++++++++++
+	public void setQualification(Qualification q) { 
 		this.qualification = q;
 	}
 
-	public void showQualification() { //++++++++++
+	public void showQualification() { 
 		System.out.println(name + " is a teacher because " + qualification);
 	}
 }
 
 class Student extends Member {
-	Course[] courses = new Course[10];
+	Course[] courses = new Course[Config.MAX_COURSE]; //**********
 
 	int courseCount = 0;
 	public Student (String name){ 
-		super(name); //*****
+		super(name); 
 	}
 	public void takeCourse(Course c) {
 		if (courseCount <=9) {
@@ -249,12 +259,12 @@ abstract class Member {
 	}	
 }
 
-interface Instructor { //++++++++++
+interface Instructor { 
 	public void setQualification(Qualification q);
 	public void showQualification();
 }
 
-class Qualification { //++++++++++
+class Qualification { 
 	String description;
 	public Qualification(String desc) {
 		this.description = desc;
@@ -264,13 +274,13 @@ class Qualification { //++++++++++
 	}
 }
 
-class Certification extends Qualification { //++++++++++
+class Certification extends Qualification { 
 	public Certification(int year, String desc) {
 		super(desc + " " + Integer.toString(year));
 	}
 }
 
-class IndustryExpert implements Instructor { //++++++++++
+class IndustryExpert implements Instructor { 
 	Qualification q;
 	String name;
 	public IndustryExpert(String name) {
