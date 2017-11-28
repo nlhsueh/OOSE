@@ -25,14 +25,18 @@ public class GradeBookApp5 {
 		Nick.setQualification(new Qualification("IECS Ph.D")); //++++++++++
 		Peter.setQualification(new Certification(2000, "Cisco")); //++++++++++
 		Instructor tutors[] = {(Instructor)Nick, (Instructor)Peter}; //++++++++++
-		showQualify(tutors); //++++++++++
+		System.out.println("\n=== INSTRUCTORS QUALIFICATION ==="); //++++++++++
+		for (Instructor i: tutors)
+			i.showQualification();
 
 		Albert.setEmail("albert@gmail.com"); 
 		Jie.setEmail("jie@gmail.com"); 
 		Nick.setEmail("nick@gmail.com"); 
 
 		Member[] members = {Albert, Jie, Nick}; 
-		showMembers(members); //*****
+		System.out.println("\n=== MEMBERS ==="); //++++++++++
+		for (Member m: members) 
+			m.showInfo();
 
 		Course Java = new Course ("Java", 3);
 		Course Python = new Course ("Python", 3);
@@ -51,18 +55,6 @@ public class GradeBookApp5 {
 		Course[] courses = {Java, Python};
 		showCourses(courses);
 	}	
-
-	public static void showQualify(Instructor[] t) { //++++++++++
-		System.out.println("\n=== INSTRUCTORS QUALIFICATION ===");
-		for (Instructor i: t)
-			i.showQualification();
-	}
-
-	public static void showMembers(Member[] members) { //++++++++++
-		System.out.println("\n=== MEMBERS ===");		
-		for (Member m: members) 
-			m.showInfo();
-	}
 
 	public static void showCourses(Course[] courses) { //++++++++++
 		System.out.println("\n=== COURSES ===");		
