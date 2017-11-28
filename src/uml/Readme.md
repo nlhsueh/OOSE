@@ -15,45 +15,21 @@ App3
 App4
 * Generalization, add class Member
 
+====
+
 App5
 * Interface implementation
-* instructor interface
+* instructor interface, two implementors
 
 App6
 * Refactoring: Too long method & magic number
-* main, and the ID
+* split main() method
+* define an interface to save constant variable
 
-
+App7
+* Strategy design pattern
+* Course.showSortedGrade()
+ 
 App8 
 * Refactoring: Grade class
-
-App9
-* Strategy design pattern
-* Course.sortStudent(Sorter )
-
-
-
-
-UML relationship
-* 1, 2, 3
-
-Generalization
-* 3=>4
-
-Principle
-* OCP
-* Dependency inversion principle
-	* 
-* Composition over inheritance
-* 
-
-Refactoring
-* 
-
-Design pattern
-* Strategy 
-* Observer
-* Factory method
-* Abstract factory
-* Bridge
-* 
+* exception handling
