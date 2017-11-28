@@ -1,81 +1,99 @@
 /*
-INTERFACE and its implementation
-* a Instructor interface define the "teach" behavior
-* Teacher or IndustryExpert may server as an instructor
-* all instructors are required to set their Qualification
-
-* OCP principle
-* when we have different types of qualification, we use "extension", not 
-  modify the code
-
-
-* add an interface Instructor, methods: setQualification(Qualification)
-	and showQualification()
-* add a new class IndustryExpert, to implement the Instructor
-* modify Teacher to implement the Instructor
-* add a Qualification subclass Certification, which requires the 
-	year getting the cerification.
-* add a static method to show all instructors
+Refactoring
+* Refactoring the code to avoid "too long method"
+	* main() is too long, split to init(), takeCourse(), show() methods
+	* the variables are moved from method to instance variable,
+	  shared by all methods
+* Refactoring to code to void "magic number"
+	* add an interface to store the MAX_COURSE and MAX_STUDENT
 */
 
-public class GradeBookApp5 {
-	public static void main(String args[]) {
-		Student Jie = new Student ("Jie");
-		Student Albert = new Student ("Albert");
-		Student Alex = new Student ("Alex"); 
+public class GradeBookApp6 { //**********
+	private Student Jie, Albert, Alex; 
+	private Teacher Nick;
+	private IndustryExpert Peter;
+	private Course Java, Python;
+	private Member[] members; //include all students and teachers
+	private Instructor[] instructors;
+	private Course[] courses;
 
-		Teacher Nick = new Teacher ("Nick");
-		
-		IndustryExpert Peter = new IndustryExpert("Peter"); //++++++++++
-		Nick.setQualification(new Qualification("IECS Ph.D")); //++++++++++
-		Peter.setQualification(new Certification(2000, "Cisco")); //++++++++++
-		Instructor tutors[] = {(Instructor)Nick, (Instructor)Peter}; //++++++++++
-		System.out.println("\n=== INSTRUCTORS QUALIFICATION ==="); //++++++++++
-		for (Instructor i: tutors)
-			i.showQualification();
+	public static void main(String args[]) { //**********
+		GradeBookApp6 gb = new GradeBookApp6();
+		gb.init(); 
+		gb.takeCourse();
+		gb.score();
+		gb.show();
+	}	
+
+	private void init() { //++++++++++
+		// create students
+		Jie = new Student ("Jie");
+		Albert = new Student ("Albert");
+		Alex = new Student ("Alex"); 
+
+		// create teachers
+		Nick = new Teacher ("Nick");
 
 		Albert.setEmail("albert@gmail.com"); 
 		Jie.setEmail("jie@gmail.com"); 
 		Nick.setEmail("nick@gmail.com"); 
 
-		Member[] members = {Albert, Jie, Nick}; 
-		System.out.println("\n=== MEMBERS ==="); //++++++++++
-		for (Member m: members) 
-			m.showInfo();
+		members = new Member[]{Jie, Albert, Alex, Nick};
 
-		Course Java = new Course ("Java", 3);
-		Course Python = new Course ("Python", 3);
+		// create course
+		Java = new Course ("Java", 3);
+		Python = new Course ("Python", 3);
+	
+		courses = new Course[] {Java, Python};
 
+		// setQualification
+		Peter = new IndustryExpert("Peter"); 
+		Nick.setQualification(new Qualification("IECS Ph.D")); 
+		Peter.setQualification(new Certification(2000, "Cisco")); 
+
+		instructors = new Instructor[] {(Instructor)Nick, (Instructor)Peter}; 
+	}
+
+	private void takeCourse() {	//++++++++++
 		Nick.offer(Java);
 		Nick.offer(Python);
 
 		Jie.takeCourse(Java);
 		Albert.takeCourse(Java);
 		Alex.takeCourse(Java); 
+	}
 
+	private void score() { //++++++++++
 		Nick.score(Java, Jie, 100); 
 		Nick.score(Java, Albert, 98); 
-		Nick.score(Java, Alex, 20); 
-		
-		Course[] courses = {Java, Python};
-		showCourses(courses);
-	}	
+		Nick.score(Java, Alex, 20); 		
+	}
 
-	public static void showCourses(Course[] courses) { //++++++++++
+	private void show() { //++++++++++
+		System.out.println("\n=== INSTRUCTORS QUALIFICATION ===");
+		for (Instructor i: instructors)
+			i.showQualification();
+		System.out.println("\n=== MEMBERS ===");		
+		for (Member m: members) 
+			m.showInfo();
 		System.out.println("\n=== COURSES ===");		
 		for (Course c: courses) 
 			c.showCourseInfo();
 	}
+}
 
+interface Config { //++++++++++
+	public static int MAX_STUDENT = 10; // max student number in a school
+	public static int MAX_COURSE = 10; //max course number in a school
 }
 
 class Course {
 	String cName;
 	private int degree;
-	Student[] students = new Student[10];
+	Student[] students = new Student[Config.MAX_STUDENT]; //**********
 	int studentCount = 0;
 	Teacher teacher = new Teacher("None");
-	int [] grades = new int[10];
+	int [] grades = new int[Config.MAX_STUDENT]; //**********
 	int scoreCount = 0; 
 	double sum=0; 
 	double average=0; 
@@ -149,10 +167,10 @@ class Course {
 	}
 }
 
-class Teacher extends Member implements Instructor {  //*****	
-	Course[] courses = new Course[10];
+class Teacher extends Member implements Instructor {  	
+	Course[] courses = new Course[Config.MAX_COURSE]; //**********
 	int courseCount = 0;
-	Qualification qualification; //++++++++++
+	Qualification qualification; 
 
 	public Teacher(String name) { 
 		super(name); 
@@ -191,21 +209,21 @@ class Teacher extends Member implements Instructor {  //*****
 		return false;
 	}
 
-	public void setQualification(Qualification q) { //++++++++++
+	public void setQualification(Qualification q) { 
 		this.qualification = q;
 	}
 
-	public void showQualification() { //++++++++++
+	public void showQualification() { 
 		System.out.println(name + " is a teacher because " + qualification);
 	}
 }
 
 class Student extends Member {
-	Course[] courses = new Course[10];
+	Course[] courses = new Course[Config.MAX_COURSE]; //**********
 
 	int courseCount = 0;
 	public Student (String name){ 
-		super(name); //*****
+		super(name); 
 	}
 	public void takeCourse(Course c) {
 		if (courseCount <=9) {
@@ -241,12 +259,12 @@ abstract class Member {
 	}	
 }
 
-interface Instructor { //++++++++++
+interface Instructor { 
 	public void setQualification(Qualification q);
 	public void showQualification();
 }
 
-class Qualification { //++++++++++
+class Qualification { 
 	String description;
 	public Qualification(String desc) {
 		this.description = desc;
@@ -256,13 +274,13 @@ class Qualification { //++++++++++
 	}
 }
 
-class Certification extends Qualification { //++++++++++
+class Certification extends Qualification { 
 	public Certification(int year, String desc) {
 		super(desc + " " + Integer.toString(year));
 	}
 }
 
-class IndustryExpert implements Instructor { //++++++++++
+class IndustryExpert implements Instructor { 
 	Qualification q;
 	String name;
 	public IndustryExpert(String name) {
