@@ -4,6 +4,11 @@ INTERFACE and its implementation
 * Teacher or IndustryExpert may server as an instructor
 * all instructors are required to set their Qualification
 
+* OCP principle
+* when we have different types of qualification, we use "extension", not 
+  modify the code
+
+
 * add an interface Instructor, methods: setQualification(Qualification)
 	and showQualification()
 * add a new class IndustryExpert, to implement the Instructor
