@@ -1,19 +1,25 @@
 Readme of GRadeBookApp example
 
 App0
+* initial implementation of Course management system
 * student, teacher, course
-App1
+* how to define a class
 
+App1
 * offer relation
+* understand 1-to-many relationship, how to map to java code
 
 App2, 2a
-* take_course
+* take course 
+* understand many-to-many relationship
 
 App3
 * score(Course, Student, int grade)
+* understand "use" relationship
 
 App4
-* Generalization, add class Member
+* define a "Member" class
+* understand "Generalization" relationship
 
 ====
 
